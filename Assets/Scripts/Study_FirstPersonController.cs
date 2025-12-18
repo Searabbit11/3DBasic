@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 
 public class Study_FirstPersonController : MonoBehaviour
 {
@@ -17,7 +18,9 @@ public class Study_FirstPersonController : MonoBehaviour
     
     // 과제 힌트 (카메라만 위아래 움직이게 하면 될듯? )
     [SerializeField] private Transform cameraTransform;
-
+    
+    private float pitch = 0f;
+    
     private void Start()
     {
         Cursor.visible = false;
@@ -58,15 +61,17 @@ public class Study_FirstPersonController : MonoBehaviour
     private void UpdateRotation()
     {
         float mouseX = Input.GetAxis("Mouse X") * horizontalSensitivity;
-        
         // Rotate 함수는 특정 축(Axis)으로 Euler를 더해줌
         // (나중에는 Quaternion 단위로 사용함. 사실은 더해주는것이아님)
         transform.Rotate(Vector3.up * mouseX);
         
-        
-        float mouseY = Input.GetAxis("Mouse Y") * verticalSensitivity;
-        cameraTransform.Rotate(Vector3.right * -mouseY);
-        
+        float mouseY = Input.GetAxis("Mouse Y");
+
         // 각도 제한 어떻게 두지 
+        
+        pitch -= mouseY * verticalSensitivity; 
+        pitch = Mathf.Clamp(pitch, -90f, 90f);
+
+        cameraTransform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
     }
 }
