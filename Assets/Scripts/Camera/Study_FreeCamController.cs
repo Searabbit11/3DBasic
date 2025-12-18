@@ -14,6 +14,12 @@ public class Study_FreeCamController : MonoBehaviour
     [SerializeField] private float horizontalSensitivity = 1.0f;
     [SerializeField] private float verticalSensitivity = 1.0f;
 
+    private float angleX = 0.0f;
+    private float angleY = 0.0f;
+
+    [SerializeField] private float maxAngleX = 90;
+    [SerializeField] private float minAngleX = -90;
+    
     private void Start()
     {
         Cursor.visible = false;
@@ -48,12 +54,6 @@ public class Study_FreeCamController : MonoBehaviour
         float applySpeed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : moveSpeed;
         transform.position += moveVector * applySpeed * Time.deltaTime;
     }
-
-    private float angleX = 0.0f;
-    private float angleY = 0.0f;
-
-    [SerializeField] private float maxAngleX = 90;
-    [SerializeField] private float minAngleX = -90;
     
     private void UpdateRotation()
     {
